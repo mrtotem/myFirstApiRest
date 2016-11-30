@@ -7,8 +7,6 @@ var mongoose = require('mongoose');
 
 var operations = require('./node_modules/scripts/UserController');
 
-var port = app.set(process.env.PORT || 3000);
-
 mongoose.connect('mongodb://MrTotem:algaros1@ds113958.mlab.com:13958/mrtotemfirstapp', function(err){
 	console.log(err);
 });
@@ -37,5 +35,5 @@ router.route('/users/:_id')
 
 app.use('/api', router);
 
-app.listen(port);
+app.listen(process.env.PORT || 3000);
 
