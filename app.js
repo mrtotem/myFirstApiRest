@@ -4,13 +4,13 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var config = require('./config');
 
 var operations = require('./node_modules/scripts/UserController');
 
-mongoose.connect('mongodb://MrTotem:algaros1@ds113958.mlab.com:13958/mrtotemfirstapp', function(err){
+mongoose.connect(config.database, function(err){
 	console.log(err);
 });
-//mongoose.connect('mongodb://localhost/mydatabase'); // mongo local
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
