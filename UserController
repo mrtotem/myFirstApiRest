@@ -1,5 +1,6 @@
 var express = require('express');
-var user = require('./models/User');
+var user = require('./node_modules/scripts/models/User');
+var service = require('./services');
 
 
 module.exports.getUsers = function (req, res) {
@@ -35,14 +36,18 @@ module.exports.registerUser = function(req, res){
 			}else{
 
 				console.log("after user creation");
-				return res.json({ message : 'User created'});
+				return res
+					.status(200)
+            		.send({token: service.createToken(user), 
+            				_id : userTemp._id, 
+            				email : userTemp.email});
 			}
 		});
 }
 
 module.exports.login = function(req, res){
 
-	user.findOne({'email' : req.body.email}, function(err, userTemp){
+	user.findOne({email : req.body.email}, function(err, userTemp){
 
 		if(err)
 			return res.status(403).send(err);
@@ -55,7 +60,9 @@ module.exports.login = function(req, res){
 			return res.send("User or Password invalid");
 		}
 
-		return res.json(userTemp);
+		return res
+				.status(200)
+				.send({token : service.createToken(user), _id : userTemp._id});
 	});
 }
 
@@ -76,6 +83,11 @@ module.exports.updateUser = function(req, res){
 
 			if(err)
 				return res.send(err);
+
+			if(!userTemp){
+
+				return res.status(401).send({status : '401', message : 'User not found'});
+			}
 
 			if(req.body.firstName != null){
 

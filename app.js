@@ -5,8 +5,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config');
-
-var operations = require('./node_modules/scripts/UserController');
+var authenticator = require('./authenticator');
+var operations = require('./UserController');
 
 mongoose.connect(config.database, function(err){
 	console.log(err);
@@ -26,15 +26,15 @@ router.use(function(req, res, next){
 
 router.route('/users')
 	.post(operations.registerUser)
-	.get(operations.getUsers);
+	.get(authenticator.ensureAuthenticated, operations.getUsers);
 
 router.route('/users/login')
 	.post(operations.login);
 
 router.route('/users/:_id')
-	.get(operations.findUserById)
-	.put(operations.updateUser)
-	.delete(operations.deleteUser);
+	.get(authenticator.ensureAuthenticated, operations.findUserById)
+	.put(authenticator.ensureAuthenticated, operations.updateUser)
+	.delete(authenticator.ensureAuthenticated, operations.deleteUser);
 
 app.use('/api', router);
 
