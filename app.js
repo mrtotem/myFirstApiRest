@@ -28,6 +28,9 @@ router.route('/users')
 	.post(operations.registerUser)
 	.get(operations.getUsers);
 
+router.route('/users/login')
+	.post(operations.login);
+
 router.route('/users/:_id')
 	.get(operations.findUserById)
 	.put(operations.updateUser)
