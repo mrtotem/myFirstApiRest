@@ -29,6 +29,8 @@ router.use(function(req, res, next){
 	next();
 });
 
+
+// User
 router.route('/users')
 	.post(operations.registerUser)
 	.get(authenticator.ensureAuthenticated, operations.getUsers);
@@ -51,7 +53,8 @@ router.route('/users/:_userId/alerts')
 	.get(authenticator.ensureAuthenticated, messageController.getUserAlerts);
 
 router.route('/users/:_userId/alerts/:_alertId')
-	.put(authenticator.ensureAuthenticated, messageController.updateAlertMessage);
+	.put(authenticator.ensureAuthenticated, messageController.updateAlertMessage)
+	.delete(authenticator.ensureAuthenticated, messageController.deleteAlert);
 
 // Dangers
 router.route('/users/:_userId/dangers')
@@ -59,7 +62,8 @@ router.route('/users/:_userId/dangers')
 	.get(authenticator.ensureAuthenticated, messageController.getUserDangers);
 
 router.route('/users/:_userId/dangers/:_dangerId')
-	.put(authenticator.ensureAuthenticated, messageController.updateDangersMessage);
+	.put(authenticator.ensureAuthenticated, messageController.updateDangersMessage)
+	.delete(authenticator.ensureAuthenticated, messageController.deleteDanger);
 
 app.use('/api', router);
 

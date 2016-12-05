@@ -131,6 +131,20 @@ module.exports.getUserAlerts = function(req, res){
 	});
 }
 
+module.exports.deleteAlert = function(req, res){
+
+	alert.remove({_id: req.params._alertId}, function(err, alertTemp){
+			
+			if(err){
+				return res.status(400).send(err);
+			}
+			if(!alertTemp){
+				return res.status(400).send(err);
+			}
+			return res.send({message : 'Alert deleted'});
+	});
+}
+
 //<<<<<< DANGERS >>>>>>
 module.exports.updateDangersMessage = function(req, res){
 
@@ -230,5 +244,19 @@ module.exports.getUserDangers = function(req, res){
 		}
 
 		return res.status(200).json(dangers);
+	});
+}
+
+module.exports.deleteDanger = function(req, res){
+
+	danger.remove({_id: req.params._dangerId}, function(err, dangerTemp){
+			
+			if(err){
+				return res.status(400).send(err);
+			}
+			if(!dangerTemp){
+				return res.status(400).send(err);
+			}
+			return res.send({message : 'Danger deleted'});
 	});
 }
