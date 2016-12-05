@@ -34,7 +34,14 @@ router.route('/users/login')
 router.route('/users/:_id')
 	.get(authenticator.ensureAuthenticated, operations.findUserById)
 	.put(authenticator.ensureAuthenticated, operations.updateUser)
-	.delete(authenticator.ensureAuthenticated, operations.deleteUser);
+	.delete(authenticator.ensureAuthenticated, operations.deleteUser); // <-- only for admin..
+
+router.route('/users/:_id/arrived')
+	.post(authenticator.ensureAuthenticated, operations.onUserArrived);
+
+router.route('/users/:_id/alerts')
+	.post(authenticator.ensureAuthenticated, operations.onUserAlerted)
+	.get(authenticator.ensureAuthenticated, operations.getUserAlerts);
 
 app.use('/api', router);
 

@@ -1,6 +1,7 @@
 var express = require('express');
 var user = require('./node_modules/scripts/models/User');
 var service = require('./services');
+var message = require('./node_modules/scripts/models/Message');
 
 
 module.exports.getUsers = function (req, res) {
@@ -119,6 +120,86 @@ module.exports.deleteUser = function(req, res){
 			if(err){
 				return res.status(400).send(err);
 			}
+			if(!userTemp){
+				return res.status(400).send(err);
+			}
 			return res.send({message : 'User deleted'});
+	});
+}
+
+module.exports.onUserArrived = function(req, res){
+
+	user.findById({_id : req.params._id}, function(err, userTemp){
+
+			if(err){
+				return	res.status(400).send(err);
+			}
+			if(!userTemp){
+				return res.status(400).send(err);
+			}
+			if(req.body.lat != null && req.body.long != null){
+
+				return res.status(200).send({
+				message : 'User arrived',
+				lat : req.body.lat,
+				long : req.body.long
+				});
+			}else{
+
+				return res.status(200).send({message : 'User arrived'});
+			}
+			
+	});
+}
+
+module.exports.onUserAlerted = function(req, res){
+
+	user.findById({_id : req.params._id}, function(err, userTemp){
+
+			if(err){
+				return	res.status(400).send(err);
+			}
+			if(!userTemp){
+				return res.status(400).send(err);
+			}
+
+			var messageTemp = new message({
+					userId : userTemp._id,
+					message : req.body.message,
+					date : req.body.date,
+					lat : req.body.lat,
+					long : req.body.long
+				});
+				console.log(messageTemp);
+
+				// save alert object y checkeo de errores
+				messageTemp.save(function(err){
+					
+					if(err){
+
+						return res.status(400).send(err);
+					}else{
+
+						console.log("after alert object creation");
+						return res
+							.status(200)
+		            		.json(messageTemp);
+					}
+				});
+	});
+}
+
+module.exports.getUserAlerts = function(req, res){
+
+	message.find(function(err, messages){
+
+		if(err){
+			return res.status(400).send(err);
+		}
+		if(!alerts){
+			return res.status(400).send({ message : 'No se encontraron mensajes de alerta'});
+		}
+
+		return res.status(200).json(messages);
 	});
 }
