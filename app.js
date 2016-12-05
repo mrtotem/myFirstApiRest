@@ -43,6 +43,9 @@ router.route('/users/:_id/alerts')
 	.post(authenticator.ensureAuthenticated, operations.onUserAlerted)
 	.get(authenticator.ensureAuthenticated, operations.getUserAlerts);
 
+	router.route('/users/:_id/alerts/:_alertId')
+	.put(authenticator.ensureAuthenticated, operations.updateAlertMessage);
+
 app.use('/api', router);
 
 app.listen(process.env.PORT || 3000);
