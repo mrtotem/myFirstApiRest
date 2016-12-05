@@ -172,10 +172,18 @@ module.exports.updateAlertMessage = function(req, res){
 					return res.status(400).send(err);
 				}
 
-				messageTemp.message = req.body.message;
-				messageTemp.date = req.body.date;
-				messageTemp.lat = req.body.lat;
-				messageTemp.long = req.body.long;
+				if(req.body.message != null){
+					messageTemp.message = req.body.message;
+				}
+				if(req.body.date != null){
+					messageTemp.date = req.body.date;
+				}
+				if(req.body.lat != null){
+					messageTemp.lat = req.body.lat;
+				}
+				if(req.body.long != null){
+					messageTemp.long = req.body.long;
+				}
 
 				// save alert object y checkeo de errores
 				messageTemp.save(function(err){
