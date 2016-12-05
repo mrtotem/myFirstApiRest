@@ -1,3 +1,5 @@
+var admin = require("firebase-admin");
+
 module.exports = {
 	
 	'SECRET_TOKEN' : process.env.SECRET_TOKEN || 'token',

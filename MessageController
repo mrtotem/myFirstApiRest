@@ -2,6 +2,7 @@ var express = require('express');
 var user = require('./node_modules/scripts/models/User');
 var alert = require('./node_modules/scripts/models/Alert');
 var danger = require('./node_modules/scripts/models/Danger');
+var notifications = require('./FirebaseController');
 
 //<<<<<<< ARRIVED >>>>>>>>
 module.exports.onUserArrived = function(req, res){
