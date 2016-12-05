@@ -41,9 +41,11 @@ router.route('/users/:_userId')
 	.put(authenticator.ensureAuthenticated, operations.updateUser)
 	.delete(authenticator.ensureAuthenticated, operations.deleteUser); // <-- only for admin..
 
+// Arrives
 router.route('/users/:_userId/arrived')
 	.post(authenticator.ensureAuthenticated, messageController.onUserArrived);
 
+// Alerts
 router.route('/users/:_userId/alerts')
 	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted)
 	.get(authenticator.ensureAuthenticated, messageController.getUserAlerts);
@@ -51,6 +53,7 @@ router.route('/users/:_userId/alerts')
 router.route('/users/:_userId/alerts/:_alertId')
 	.put(authenticator.ensureAuthenticated, messageController.updateAlertMessage);
 
+// Dangers
 router.route('/users/:_userId/dangers')
 	.post(authenticator.ensureAuthenticated, messageController.onUserDanger)
 	.get(authenticator.ensureAuthenticated, messageController.getUserDangers);
