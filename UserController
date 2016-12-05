@@ -1,8 +1,6 @@
 var express = require('express');
 var user = require('./node_modules/scripts/models/User');
 var service = require('./services');
-var message = require('./node_modules/scripts/models/Message');
-
 
 module.exports.getUsers = function (req, res){
 	

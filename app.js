@@ -48,8 +48,15 @@ router.route('/users/:_userId/alerts')
 	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted)
 	.get(authenticator.ensureAuthenticated, messageController.getUserAlerts);
 
-	router.route('/users/:_userId/alerts/:_alertId')
+router.route('/users/:_userId/alerts/:_alertId')
 	.put(authenticator.ensureAuthenticated, messageController.updateAlertMessage);
+
+router.route('/users/:_userId/dangers')
+	.post(authenticator.ensureAuthenticated, messageController.onUserDanger)
+	.get(authenticator.ensureAuthenticated, messageController.getUserDangers);
+
+router.route('/users/:_userId/dangers/:_dangerId')
+	.put(authenticator.ensureAuthenticated, messageController.updateDangersMessage);
 
 app.use('/api', router);
 
