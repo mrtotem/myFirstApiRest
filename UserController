@@ -4,7 +4,7 @@ var service = require('./services');
 var message = require('./node_modules/scripts/models/Message');
 
 
-module.exports.getUsers = function (req, res) {
+module.exports.getUsers = function (req, res){
 	
 	user.find(function(err, users){
 
