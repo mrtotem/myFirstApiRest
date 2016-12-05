@@ -1,6 +1,6 @@
 var FCM = require('fcm-push');
 
-var serverKey = 'AIzaSyAmtKRxNlc9HGQCojKiR22PGyyGPexay8Y';
+var serverKey = 'AAAAH8KfAIY:APA91bENBod1lH6yfb9AWTz5yC7f2Lj1F07sws4dXiPKz1ziqa7mhKnviLdGtTI2jlEP3-2-J5k0jb4LAHbFjAJooNlJh1uQ9nurC16EMBQi7Mc8l0_orX-KyTDSB5YCiGcBNqkoT49OhfiqyikD-DnKR1XfNK0cdg';
 var fcm = new FCM(serverKey);
 
 module.exports.sendArrivedPush = function(req, res){
