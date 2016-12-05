@@ -31,19 +31,19 @@ router.route('/users')
 router.route('/users/login')
 	.post(operations.login);
 
-router.route('/users/:_id')
+router.route('/users/:_userId')
 	.get(authenticator.ensureAuthenticated, operations.findUserById)
 	.put(authenticator.ensureAuthenticated, operations.updateUser)
 	.delete(authenticator.ensureAuthenticated, operations.deleteUser); // <-- only for admin..
 
-router.route('/users/:_id/arrived')
+router.route('/users/:_userId/arrived')
 	.post(authenticator.ensureAuthenticated, operations.onUserArrived);
 
-router.route('/users/:_id/alerts')
+router.route('/users/:_userId/alerts')
 	.post(authenticator.ensureAuthenticated, operations.onUserAlerted)
 	.get(authenticator.ensureAuthenticated, operations.getUserAlerts);
 
-	router.route('/users/:_id/alerts/:_alertId')
+	router.route('/users/:_userId/alerts/:_alertId')
 	.put(authenticator.ensureAuthenticated, operations.updateAlertMessage);
 
 app.use('/api', router);
