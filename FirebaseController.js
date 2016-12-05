@@ -1,51 +1,19 @@
 var FCM = require('fcm-push');
 
-var serverKey = '';
+var serverKey = 'AIzaSyAmtKRxNlc9HGQCojKiR22PGyyGPexay8Y';
 var fcm = new FCM(serverKey);
 
-var arrivedMessage = {
-
-    to: 'registration_token_or_topics', // required fill with device token or topics
-    collapse_key: 'your_collapse_key', 
-    data: {
-        your_custom_data_key: 'your_custom_data_value'
-    },
-
-    notification: {
-        title: 'Mensage de llegada!',
-        body: 'Este es un mensaje de llegada'
-    }
-};
-
-var alertMessage = {
-
-    to: 'registration_token_or_topics', // required fill with device token or topics
-    collapse_key: 'your_collapse_key', 
-    data: {
-        your_custom_data_key: 'your_custom_data_value'
-    },
-
-    notification: {
-        title: 'Mensage de alerta!',
-        body: 'Este es un mensaje de alerta'
-    }
-};
-
-var dangerMessage = {
-
-    to: 'registration_token_or_topics', // required fill with device token or topics
-    collapse_key: 'your_collapse_key', 
-    data: {
-        your_custom_data_key: 'your_custom_data_value'
-    },
-
-    notification: {
-        title: 'Mensage de peligro!',
-        body: 'Este es un mensaje de peligro'
-    }
-};
-
 module.exports.sendArrivedPush = function(req, res){
+
+    var arrivedMessage = {
+
+        to: req.body.pushToken, // required fill with device token or topics
+        collapse_key: 'your_collapse_key',
+        notification: {
+            title: 'Mensage de llegada!',
+            body: 'Este es un mensaje de llegada'
+        }
+    };
 
 	fcm.send(arrivedMessage, function(err, response){
 
@@ -64,6 +32,16 @@ module.exports.sendArrivedPush = function(req, res){
 
 module.exports.sendAlertPush = function(req, res){
 
+    var alertMessage = {
+
+        to: req.body.pushToken, // required fill with device token or topics
+        collapse_key: 'your_collapse_key',
+        notification: {
+            title: 'Mensage de alerta!',
+            body: 'Este es un mensaje de alerta'
+        }
+    };
+
 	fcm.send(alertMessage, function(err, response){
 
 	    if (err) {
@@ -80,6 +58,17 @@ module.exports.sendAlertPush = function(req, res){
 }
 
 module.exports.sendDangerPush = function(req, res){
+
+    var dangerMessage = {
+
+        to: req.body.pushToken, // required fill with device token or topics
+        collapse_key: 'your_collapse_key',
+        notification: {
+            title: 'Mensage de peligro!',
+            body: 'Este es un mensaje de peligro'
+        }
+    };
+
 
 	fcm.send(dangerMessage, function(err, response){
 

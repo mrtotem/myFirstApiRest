@@ -17,6 +17,7 @@ module.exports.onUserArrived = function(req, res){
 			}
 			if(req.body.lat != null && req.body.long != null){
 
+				notifications.sendArrivedPush;
 				return res.status(200).send({
 				message : 'User arrived',
 				lat : req.body.lat,
