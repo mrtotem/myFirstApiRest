@@ -257,6 +257,6 @@ module.exports.deleteDanger = function(req, res){
 			if(!dangerTemp){
 				return res.status(400).send(err);
 			}
-			return res.send({message : 'Danger deleted'});
+			return res.status(200).send({message : 'Danger deleted'});
 	});
 }
