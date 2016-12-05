@@ -5,8 +5,13 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config');
+
+// Authentication
 var authenticator = require('./authenticator');
+
+// Controllers
 var operations = require('./UserController');
+var messageController = require('./MessageController');
 
 mongoose.connect(config.database, function(err){
 	console.log(err);
@@ -37,14 +42,14 @@ router.route('/users/:_userId')
 	.delete(authenticator.ensureAuthenticated, operations.deleteUser); // <-- only for admin..
 
 router.route('/users/:_userId/arrived')
-	.post(authenticator.ensureAuthenticated, operations.onUserArrived);
+	.post(authenticator.ensureAuthenticated, messageController.onUserArrived);
 
 router.route('/users/:_userId/alerts')
-	.post(authenticator.ensureAuthenticated, operations.onUserAlerted)
-	.get(authenticator.ensureAuthenticated, operations.getUserAlerts);
+	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted)
+	.get(authenticator.ensureAuthenticated, messageController.getUserAlerts);
 
 	router.route('/users/:_userId/alerts/:_alertId')
-	.put(authenticator.ensureAuthenticated, operations.updateAlertMessage);
+	.put(authenticator.ensureAuthenticated, messageController.updateAlertMessage);
 
 app.use('/api', router);
 
