@@ -1,7 +1,8 @@
 var FCM = require('fcm-push');
+var config = require('./config');
 
-var serverKey = 'AAAAH8KfAIY:APA91bENBod1lH6yfb9AWTz5yC7f2Lj1F07sws4dXiPKz1ziqa7mhKnviLdGtTI2jlEP3-2-J5k0jb4LAHbFjAJooNlJh1uQ9nurC16EMBQi7Mc8l0_orX-KyTDSB5YCiGcBNqkoT49OhfiqyikD-DnKR1XfNK0cdg';
-var fcm = new FCM(serverKey);
+
+var fcm = new FCM(config.PUSH_SERVER_KEY);
 
 module.exports.sendArrivedPush = function(req, res){
 
@@ -19,16 +20,12 @@ module.exports.sendArrivedPush = function(req, res){
 
 	    if (err) {
 	        console.log("Something has gone wrong!");
-	    }
-	})
-	.then(function(response){
-        console.log("Successfully sent with response: ", arrivedMessage);
-    })
-    .catch(function(err){
-        console.log("Something has gone wrong!");
-        console.error(err);
-    });
+	    }else{
+            console.log("Successfully sent with response: ", arrivedMessage);
+        }
+	});
 }
+	
 
 module.exports.sendAlertPush = function(req, res){
 
@@ -45,15 +42,10 @@ module.exports.sendAlertPush = function(req, res){
 	fcm.send(alertMessage, function(err, response){
 
 	    if (err) {
-	        console.log("Something has gone wrong!");
-	    }
-	})
-	.then(function(response){
-        console.log("Successfully sent with response: ", alertMessage);
-    })
-    .catch(function(err){
-        console.log("Something has gone wrong!");
-        console.error(err);
+            console.log("Something has gone wrong!");
+        }else{
+            console.log("Successfully sent with response: ", alertMessage);
+        }
     });
 }
 
@@ -73,14 +65,9 @@ module.exports.sendDangerPush = function(req, res){
 	fcm.send(dangerMessage, function(err, response){
 
 	    if (err) {
-	        console.log("Something has gone wrong!");
-	    }
-	})
-	.then(function(response){
-        console.log("Successfully sent with response: ", dangerMessage);
-    })
-    .catch(function(err){
-        console.log("Something has gone wrong!");
-        console.error(err);
+            console.log("Something has gone wrong!");
+        }else{
+            console.log("Successfully sent with response: ", dangerMessage);
+        }
     });
 }

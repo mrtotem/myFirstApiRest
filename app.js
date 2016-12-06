@@ -12,6 +12,7 @@ var authenticator = require('./authenticator');
 // Controllers
 var operations = require('./UserController');
 var messageController = require('./MessageController');
+var pushController = require('./FirebaseController');
 
 mongoose.connect(config.database, function(err){
 	console.log(err);
@@ -45,7 +46,7 @@ router.route('/users/:_userId')
 
 // Arrives
 router.route('/users/:_userId/arrived')
-	.post(authenticator.ensureAuthenticated, messageController.onUserArrived);
+	.post(authenticator.ensureAuthenticated, messageController.onUserArrived, pushController.sendArrivedPush);
 
 // Alerts
 router.route('/users/:_userId/alerts')

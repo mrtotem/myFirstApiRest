@@ -3,11 +3,6 @@ var user = require('./node_modules/scripts/models/User');
 var alert = require('./node_modules/scripts/models/Alert');
 var danger = require('./node_modules/scripts/models/Danger');
 
-var FCM = require('fcm-push');
-
-var serverKey = 'AAAAH8KfAIY:APA91bENBod1lH6yfb9AWTz5yC7f2Lj1F07sws4dXiPKz1ziqa7mhKnviLdGtTI2jlEP3-2-J5k0jb4LAHbFjAJooNlJh1uQ9nurC16EMBQi7Mc8l0_orX-KyTDSB5YCiGcBNqkoT49OhfiqyikD-DnKR1XfNK0cdg';
-var fcm = new FCM(serverKey);
-
 //<<<<<<< ARRIVED >>>>>>>>
 module.exports.onUserArrived = function(req, res){
 
@@ -27,30 +22,6 @@ module.exports.onUserArrived = function(req, res){
 				long : req.body.long
 				});
 			}else{
-
-				 var arrivedMessage = {
-
-			        to: req.body.pushToken, // required fill with device token or topics
-			        collapse_key: 'your_collapse_key',
-			        notification: {
-			            title: 'Mensage de llegada!',
-			            body: 'Este es un mensaje de llegada'
-			        }
-				 };
-
-				fcm.send(arrivedMessage, function(err, response){
-
-					if (err) {
-					       console.log("Something has gone wrong!");
-					    }
-				})
-				.then(function(response){
-				       console.log("Successfully sent with response: ", arrivedMessage);
-				})
-				.catch(function(err){
-				     console.log("Something has gone wrong!");
-				     console.error(err);
-				});
 
 				return res.status(200).send({message : 'User arrived'});
 			}
