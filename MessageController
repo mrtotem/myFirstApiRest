@@ -4,7 +4,7 @@ var alert = require('./node_modules/scripts/models/Alert');
 var danger = require('./node_modules/scripts/models/Danger');
 
 //<<<<<<< ARRIVED >>>>>>>>
-module.exports.onUserArrived = function(req, res){
+module.exports.onUserArrived = function(req, res, next){
 
 	user.findById({_id : req.params._userId}, function(err, userTemp){
 
@@ -27,6 +27,7 @@ module.exports.onUserArrived = function(req, res){
 			}
 			
 	});
+	next();
 }
 
 //<<<<<< ALERTS >>>>>>>
