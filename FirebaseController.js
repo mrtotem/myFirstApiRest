@@ -16,9 +16,12 @@ module.exports.sendArrivedPush = function(req, res){
         }
     };
 
+    console.log(arrivedMessage);
+
 	fcm.send(arrivedMessage, function(err, response){
 
 	    if (err) {
+            console.log(err);
 	        console.log("Something has gone wrong!");
 	    }else{
             console.log("Successfully sent with response: ", arrivedMessage);
