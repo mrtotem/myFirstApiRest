@@ -13,12 +13,13 @@ module.exports.sendArrivedPush = function(req, res){
             if(err)
                 return res.status(400).send(err);
 
+            console.log(userTemp);
+
             var arrivedMessage = {
 
                 to: userTemp.pushToken, // required fill with device token or topics
                 notification: {
                     title: 'Mensage de llegada!',
-                    "priority" : "normal",
                     body: 'Este es un mensaje de llegada'
                 }
             };
