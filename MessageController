@@ -9,7 +9,7 @@ module.exports.onUserArrived = function(req, res, next){
 	user.findById({_id : req.params._userId}, function(err, userTemp){
 
 			if(err){
-				return	res.status(400).send(err);
+				return res.status(400).send(err);
 			}
 			if(!userTemp){
 				return res.status(400).send(err);
@@ -82,7 +82,7 @@ module.exports.updateAlertMessage = function(req, res){
 	});
 }
 
-module.exports.onUserAlerted = function(req, res){
+module.exports.onUserAlerted = function(req, res, next){
 
 	user.findById({_id : req.params._userId}, function(err, userTemp){
 
@@ -115,6 +115,7 @@ module.exports.onUserAlerted = function(req, res){
 				}
 			});
 	});
+	next();
 }
 
 module.exports.getUserAlerts = function(req, res){
@@ -198,7 +199,7 @@ module.exports.updateDangersMessage = function(req, res){
 	});
 }
 
-module.exports.onUserDanger = function(req, res){
+module.exports.onUserDanger = function(req, res, next){
 
 	user.findById({_id : req.params._userId}, function(err, userTemp){
 
@@ -231,6 +232,7 @@ module.exports.onUserDanger = function(req, res){
 				}
 			});
 	});
+	next();
 }
 
 module.exports.getUserDangers = function(req, res){

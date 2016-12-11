@@ -50,7 +50,7 @@ router.route('/users/:_userId/arrived')
 
 // Alerts
 router.route('/users/:_userId/alerts')
-	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted)
+	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted, pushController.sendAlertPush)
 	.get(authenticator.ensureAuthenticated, messageController.getUserAlerts);
 
 router.route('/users/:_userId/alerts/:_alertId')
@@ -59,7 +59,7 @@ router.route('/users/:_userId/alerts/:_alertId')
 
 // Dangers
 router.route('/users/:_userId/dangers')
-	.post(authenticator.ensureAuthenticated, messageController.onUserDanger)
+	.post(authenticator.ensureAuthenticated, messageController.onUserDanger, pushController.sendDangerPush)
 	.get(authenticator.ensureAuthenticated, messageController.getUserDangers);
 
 router.route('/users/:_userId/dangers/:_dangerId')

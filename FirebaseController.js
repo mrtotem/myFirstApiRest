@@ -6,14 +6,14 @@ var fcm = new FCM('AAAAH8KfAIY:APA91bENBod1lH6yfb9AWTz5yC7f2Lj1F07sws4dXiPKz1ziq
 
 module.exports.sendArrivedPush = function(req, res){
 
-    console.log(req.params._userId);
+    console.log("EMAIL SENDED " + req.body.email);
 
-    user.findById(req.params._userId, function(err, userTemp){
+    user.findOne({email: req.body.email}, function(err, userTemp){
 
             if(err)
                 return res.status(400).send(err);
 
-            console.log(userTemp);
+            console.log("USER FOUND " + userTemp);
 
             var arrivedMessage = {
 
@@ -41,45 +41,69 @@ module.exports.sendArrivedPush = function(req, res){
 
 module.exports.sendAlertPush = function(req, res){
 
-    var alertMessage = {
+    console.log("EMAIL SENDED " + req.body.email);
 
-        to: req.body.pushToken, // required fill with device token or topics
-        collapse_key: 'your_collapse_key',
-        notification: {
-            title: 'Mensage de alerta!',
-            body: 'Este es un mensaje de alerta'
-        }
-    };
+    user.findOne({email: req.body.email}, function(err, userTemp){
 
-	fcm.send(alertMessage, function(err, response){
+            if(err)
+                return res.status(400).send(err);
 
-	    if (err) {
-            console.log("Something has gone wrong!");
-        }else{
-            console.log("Successfully sent with response: ", alertMessage);
-        }
+            console.log("USER FOUND " + userTemp);
+
+            var alertMessage = {
+
+                to: userTemp.pushToken, // required fill with device token or topics
+                    notification: {
+                    title: 'Mensage de alerta!',
+                    body: 'Este es un mensaje de alerta'
+                }
+            };
+
+            console.log(alertMessage);
+            
+            fcm.send(alertMessage, function(err, response){
+
+                if (err) {
+                    console.log(err);
+                    console.log("Something has gone wrong!");
+                }else{
+                    console.log("Successfully sent with response: ", alertMessage);
+                }
+            });
     });
 }
 
 module.exports.sendDangerPush = function(req, res){
 
-    var dangerMessage = {
 
-        to: req.body.pushToken, // required fill with device token or topics
-        collapse_key: 'your_collapse_key',
-        notification: {
-            title: 'Mensage de peligro!',
-            body: 'Este es un mensaje de peligro'
-        }
-    };
+    console.log("EMAIL SENDED " + req.body.email);
 
+    user.findOne({email: req.body.email}, function(err, userTemp){
 
-	fcm.send(dangerMessage, function(err, response){
+            if(err)
+                return res.status(400).send(err);
 
-	    if (err) {
-            console.log("Something has gone wrong!");
-        }else{
-            console.log("Successfully sent with response: ", dangerMessage);
-        }
+            console.log("USER FOUND " + userTemp);
+
+            var dangerMessage = {
+
+                to: userTemp.pushToken, // required fill with device token or topics
+                    notification: {
+                    title: 'Mensage de peligro!',
+                    body: 'Este es un mensaje de peligro'
+                }
+            };
+
+            console.log(dangerMessage);
+            
+            fcm.send(dangerMessage, function(err, response){
+
+                if (err) {
+                    console.log(err);
+                    console.log("Something has gone wrong!");
+                }else{
+                    console.log("Successfully sent with response: ", dangerMessage);
+                }
+            });
     });
 }
