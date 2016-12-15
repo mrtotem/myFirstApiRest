@@ -25,7 +25,6 @@ module.exports.onUserArrived = function(req, res, next){
 
 				return res.status(200).send({message : 'User arrived'});
 			}
-			
 	});
 	next();
 }
@@ -120,16 +119,26 @@ module.exports.onUserAlerted = function(req, res, next){
 
 module.exports.getUserAlerts = function(req, res){
 
-	alert.find(function(err, alerts){
+	user.findOne({email : req.params.email}, function(err, userTemp){
 
 		if(err){
 			return res.status(400).send(err);
 		}
-		if(!alerts){
-			return res.status(400).send({ message : 'No se encontraron mensajes de alerta'});
+		if(!userTemp){
+			return res.status(400).send({ message : 'Usuario no encontrado'});
 		}
 
-		return res.status(200).json(alerts);
+		alert.find({userId : userTemp._id},function(err, alerts){
+
+			if(err){
+				return res.status(400).send(err);
+			}
+			if(!alerts){
+				return res.status(400).send({ message : 'No se encontraron mensajes de alerta'});
+			}
+
+			return res.status(200).json(alerts);
+		});
 	});
 }
 
@@ -237,16 +246,25 @@ module.exports.onUserDanger = function(req, res, next){
 
 module.exports.getUserDangers = function(req, res){
 
-	danger.find(function(err, dangers){
+	user.findOne({email : req.params.email}, function(err, userTemp){
 
 		if(err){
 			return res.status(400).send(err);
 		}
-		if(!dangers){
-			return res.status(400).send({ message : 'No se encontraron mensajes de alerta'});
+		if(!userTemp){
+			return res.status(400).send({ message : 'Usuario no encontrado'});
 		}
+		danger.find(function(err, dangers){
 
-		return res.status(200).json(dangers);
+			if(err){
+				return res.status(400).send(err);
+			}
+			if(!dangers){
+				return res.status(400).send({ message : 'No se encontraron mensajes de alerta'});
+			}
+
+			return res.status(200).json(dangers);
+		});
 	});
 }
 

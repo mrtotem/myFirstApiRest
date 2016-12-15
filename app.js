@@ -51,6 +51,8 @@ router.route('/users/:_userId/arrived')
 // Alerts
 router.route('/users/:_userId/alerts')
 	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted, pushController.sendAlertPush)
+
+router.route('/alerts/:email')
 	.get(authenticator.ensureAuthenticated, messageController.getUserAlerts);
 
 router.route('/users/:_userId/alerts/:_alertId')
@@ -60,6 +62,8 @@ router.route('/users/:_userId/alerts/:_alertId')
 // Dangers
 router.route('/users/:_userId/dangers')
 	.post(authenticator.ensureAuthenticated, messageController.onUserDanger, pushController.sendDangerPush)
+
+router.route('/dangers/:email')
 	.get(authenticator.ensureAuthenticated, messageController.getUserDangers);
 
 router.route('/users/:_userId/dangers/:_dangerId')
