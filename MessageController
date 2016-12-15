@@ -94,8 +94,7 @@ module.exports.onUserAlerted = function(req, res, next){
 
 			var alertTemp = new alert({
 								userId : userTemp._id,
-								date : req.body.date,
-								type : 1
+								date : req.body.date
 							});
 
 			console.log(alertTemp);
@@ -222,8 +221,7 @@ module.exports.onUserDanger = function(req, res, next){
 
 			var dangerTemp = new danger({
 								userId : userTemp._id,
-								date : req.body.date,
-								type : 2
+								date : req.body.date
 							});
 
 			console.log(dangerTemp);
