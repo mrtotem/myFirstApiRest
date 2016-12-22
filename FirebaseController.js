@@ -20,7 +20,7 @@ module.exports.sendArrivedPush = function(req, res){
                 to: userTemp.pushToken, // required fill with device token or topics
                 notification: {
                     title: 'Mensage de llegada!',
-                    body: JSON.stringify({text : 'Mensaje de llegada de: ', user : userTemp.firstName})
+                    body: 'Mensaje de llegada de: ' + userTemp.firstName
                 }
             };
 
@@ -45,7 +45,7 @@ module.exports.sendAlertPush = function(req, res){
 
     user.findOne({email: req.body.email}, function(err, userTemp){
 
-            if(err)
+            if(err)s
                 return res.status(400).send(err);
 
             console.log("USER FOUND " + userTemp);
@@ -55,7 +55,7 @@ module.exports.sendAlertPush = function(req, res){
                 to: userTemp.pushToken, // required fill with device token or topics
                     notification: {
                     title: 'Mensage de alerta!',
-                    body: 'Este es un mensaje de alerta'
+                    body: 'Mensaje de alerta de: ' + userTemp.firstName
                 }
             };
 
@@ -90,7 +90,7 @@ module.exports.sendDangerPush = function(req, res){
                 to: userTemp.pushToken, // required fill with device token or topics
                     notification: {
                     title: 'Mensage de peligro!',
-                    body: 'Este es un mensaje de peligro'
+                    body: 'Mensaje de peligro de: ' + userTemp.firstName
                 }
             };
 
