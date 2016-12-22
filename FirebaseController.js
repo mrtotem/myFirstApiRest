@@ -45,15 +45,16 @@ module.exports.sendAlertPush = function(req, res){
 
     user.findOne({email: req.body.email}, function(err, userTemp){
 
-            if(err)s
+            if(err){
                 return res.status(400).send(err);
+            }
 
             console.log("USER FOUND " + userTemp);
 
             var alertMessage = {
 
                 to: userTemp.pushToken, // required fill with device token or topics
-                    notification: {
+                notification: {
                     title: 'Mensage de alerta!',
                     body: 'Mensaje de alerta de: ' + userTemp.firstName
                 }
@@ -80,8 +81,9 @@ module.exports.sendDangerPush = function(req, res){
 
     user.findOne({email: req.body.email}, function(err, userTemp){
 
-            if(err)
+            if(err){
                 return res.status(400).send(err);
+            }
 
             console.log("USER FOUND " + userTemp);
 
