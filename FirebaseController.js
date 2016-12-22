@@ -20,7 +20,7 @@ module.exports.sendArrivedPush = function(req, res){
                 to: userTemp.pushToken, // required fill with device token or topics
                 notification: {
                     title: 'Mensage de llegada!',
-                    body: 'Este es un mensaje de llegada'
+                    body: JSON.stringify({text : 'Mensaje de llegada de: ', user : userTemp.firstName})
                 }
             };
 
