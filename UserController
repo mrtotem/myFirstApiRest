@@ -62,11 +62,11 @@ module.exports.login = function(req, res){
 			return res.status(403).send(err);
 
 		if(!userTemp){
-			return res.status(401).send({message : "Usuario y/o contraseña inválidos"});
+			return res.status(403).send({message : "Usuario y/o contraseña inválidos"});
 		}
 
 		if(userTemp.password != req.body.password){
-			return res.status(401).send({message : "Usuario y/o contraseña inválidos"});
+			return res.status(403).send({message : "Usuario y/o contraseña inválidos"});
 		}
 
 		return res
