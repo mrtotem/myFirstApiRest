@@ -52,7 +52,7 @@ router.route('/arrivals/:email')
 	.get(authenticator.ensureAuthenticated, messageController.getUserArrivals);
 
 router.route('/users/:_userId/arrivals/:_arrivedId')
-	.delete(authenticator.ensureAuthenticated, messageController.deleteArrived);
+	.delete(messageController.deleteArrived);
 // Alerts
 router.route('/users/:_userId/alerts')
 	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted, pushController.sendAlertPush)
@@ -62,7 +62,7 @@ router.route('/alerts/:email')
 
 router.route('/users/:_userId/alerts/:_alertId')
 	.put(authenticator.ensureAuthenticated, messageController.updateAlertMessage)
-	.delete(authenticator.ensureAuthenticated, messageController.deleteAlert);
+	.delete(messageController.deleteAlert);
 
 // Dangers
 router.route('/users/:_userId/dangers')
@@ -73,7 +73,7 @@ router.route('/dangers/:email')
 
 router.route('/users/:_userId/dangers/:_dangerId')
 	.put(authenticator.ensureAuthenticated, messageController.updateDangersMessage)
-	.delete(authenticator.ensureAuthenticated, messageController.deleteDanger);
+	.delete(messageController.deleteDanger);
 
 app.use('/api', router);
 
