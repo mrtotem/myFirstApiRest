@@ -21,23 +21,36 @@ module.exports.registerUser = function(req, res){
 			email : req.body.email,
 			password : req.body.password
 		});
-		console.log(userTemp);
 
-		// save al usuario y checkeo de errores
-		userTemp.save(function(err){
-			
+		user.findOne({email : userTemp.email}, function(err, oldUser){
+
 			if(err){
-
 				return res.status(400).send(err);
+			}
+
+			if(oldUser){
+				return res.status(401).send({message : "El usuario ya existe"});
 			}else{
 
-				console.log("after user creation");
-				return res
-					.status(200)
-            		.send({token: service.createToken(user), 
-            				_id : userTemp._id, 
-            				email : userTemp.email});
-			}
+				console.log(userTemp);
+
+				// save al usuario y checkeo de errores
+				userTemp.save(function(err){
+					
+					if(err){
+
+						return res.status(400).send(err);
+					}else{
+
+						console.log("after user creation");
+						return res
+							.status(200)
+		            		.send({token: service.createToken(user), 
+		            				_id : userTemp._id, 
+		            				email : userTemp.email});
+					}
+				});
+			}	
 		});
 }
 
@@ -49,11 +62,11 @@ module.exports.login = function(req, res){
 			return res.status(403).send(err);
 
 		if(!userTemp){
-			return res.send("User or Password invalid");
+			return res.status(401).send({message : "Usuario y/o contraseña inválidos"});
 		}
 
 		if(userTemp.password != req.body.password){
-			return res.send("User or Password invalid");
+			return res.status(401).send({message : "Usuario y/o contraseña inválidos"});
 		}
 
 		return res

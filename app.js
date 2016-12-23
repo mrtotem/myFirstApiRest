@@ -42,7 +42,7 @@ router.route('/users/login')
 router.route('/users/:_userId')
 	.get(authenticator.ensureAuthenticated, operations.findUserById)
 	.put(authenticator.ensureAuthenticated, operations.updateUser)
-	.delete(authenticator.ensureAuthenticated, operations.deleteUser); // <-- only for admin..
+	.delete(operations.deleteUser); // <-- only for admin..
 
 // Arrivals
 router.route('/users/:_userId/arrivals')
