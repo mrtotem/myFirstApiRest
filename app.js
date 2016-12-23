@@ -51,6 +51,8 @@ router.route('/users/:_userId/arrivals')
 router.route('/arrivals/:email')
 	.get(authenticator.ensureAuthenticated, messageController.getUserArrivals);
 
+router.route('/users/:_userId/arrivals/:_arrivedId')
+	.delete(authenticator.ensureAuthenticated, messageController.deleteArrived);
 // Alerts
 router.route('/users/:_userId/alerts')
 	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted, pushController.sendAlertPush)
