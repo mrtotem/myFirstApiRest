@@ -44,9 +44,12 @@ router.route('/users/:_userId')
 	.put(authenticator.ensureAuthenticated, operations.updateUser)
 	.delete(authenticator.ensureAuthenticated, operations.deleteUser); // <-- only for admin..
 
-// Arrives
-router.route('/users/:_userId/arrived')
+// Arrivals
+router.route('/users/:_userId/arrivals')
 	.post(authenticator.ensureAuthenticated, messageController.onUserArrived, pushController.sendArrivedPush);
+
+router.route('/arrivals/:email')
+	.get(authenticator.ensureAuthenticated, messageController.getUserArrivals);
 
 // Alerts
 router.route('/users/:_userId/alerts')

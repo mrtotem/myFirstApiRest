@@ -1,32 +1,84 @@
 var express = require('express');
 var user = require('./node_modules/scripts/models/User');
+var arrived = require('./node_modules/scripts/models/Arrived');
 var alert = require('./node_modules/scripts/models/Alert');
 var danger = require('./node_modules/scripts/models/Danger');
 
-//<<<<<<< ARRIVED >>>>>>>>
+//<<<<<<< ARRIVALS >>>>>>>>
 module.exports.onUserArrived = function(req, res, next){
 
-	user.findById({_id : req.params._userId}, function(err, userTemp){
+		user.findById({_id : req.params._userId}, function(err, userTemp){
 
 			if(err){
-				return res.status(400).send(err);
+				return	res.status(400).send(err);
 			}
 			if(!userTemp){
 				return res.status(400).send(err);
 			}
-			if(req.body.lat != null && req.body.long != null){
 
-				return res.status(200).send({
-				message : 'User arrived',
-				lat : req.body.lat,
-				long : req.body.long
-				});
-			}else{
+			var arrivedTemp = new arrived({
+								userId : userTemp._id,
+								date : req.body.date,
+								type : '3'
+							});
 
-				return res.status(200).send({message : 'User arrived', user : userTemp.firstName});
-			}
+			console.log(arrivedTemp);
+
+			// save alert object y checkeo de errores
+			arrivedTemp.save(function(err){
+						
+				if(err){
+
+					return res.status(400).send(err);
+				}else{
+
+					console.log("after alert object creation");
+					return res
+						.status(200)
+			           	.json(arrivedTemp);
+				}
+			});
 	});
 	next();
+}
+
+module.exports.getUserArrivals = function(req, res){
+
+	user.findOne({email : req.params.email}, function(err, userTemp){
+
+		if(err){
+			return res.status(400).send(err);
+		}
+		if(!userTemp){
+			return res.status(400).send({ message : 'Usuario no encontrado'});
+		}
+
+		arrived.find({userId : userTemp._id},function(err, arrivals){
+
+			if(err){
+				return res.status(400).send(err);
+			}
+			if(!arrivals){
+				return res.status(400).send({ message : 'No se encontraron mensajes de llegada'});
+			}
+
+			return res.status(200).json(arrivals);
+		});
+	});
+}
+
+module.exports.deleteArrived = function(req, res){
+
+	arrived.remove({_id: req.params._arrivedId}, function(err, arrivedTemp){
+			
+			if(err){
+				return res.status(400).send(err);
+			}
+			if(!arrivedTemp){
+				return res.status(400).send(err);
+			}
+			return res.send({message : 'Arrived deleted'});
+	});
 }
 
 //<<<<<< ALERTS >>>>>>>
