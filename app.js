@@ -30,7 +30,6 @@ router.use(function(req, res, next){
 	next();
 });
 
-
 // User
 router.route('/users')
 	.post(operations.registerUser)
@@ -44,6 +43,9 @@ router.route('/users/:_userId')
 	.put(authenticator.ensureAuthenticated, operations.updateUser)
 	.delete(operations.deleteUser); // <-- only for admin..
 
+router.route('/users/cleandb')
+	.post(operations.cleanDB);
+
 // Arrivals
 router.route('/users/:_userId/arrivals')
 	.post(authenticator.ensureAuthenticated, messageController.onUserArrived, pushController.sendArrivedPush);
@@ -53,6 +55,10 @@ router.route('/arrivals/:email')
 
 router.route('/users/:_userId/arrivals/:_arrivedId')
 	.delete(messageController.deleteArrived);
+
+router.route('/arrivals/cleandb')
+	.post(messageController.cleanArrivalsDB);
+	
 // Alerts
 router.route('/users/:_userId/alerts')
 	.post(authenticator.ensureAuthenticated, messageController.onUserAlerted, pushController.sendAlertPush)
@@ -64,6 +70,9 @@ router.route('/users/:_userId/alerts/:_alertId')
 	.put(authenticator.ensureAuthenticated, messageController.updateAlertMessage)
 	.delete(messageController.deleteAlert);
 
+router.route('/alerts/cleandb')
+	.post(messageController.cleanAlertsDB);
+
 // Dangers
 router.route('/users/:_userId/dangers')
 	.post(authenticator.ensureAuthenticated, messageController.onUserDanger, pushController.sendDangerPush)
@@ -74,6 +83,9 @@ router.route('/dangers/:email')
 router.route('/users/:_userId/dangers/:_dangerId')
 	.put(authenticator.ensureAuthenticated, messageController.updateDangersMessage)
 	.delete(messageController.deleteDanger);
+
+router.route('/dangers/cleandb')
+	.post(messageController.cleanDangersDB);
 
 app.use('/api', router);
 

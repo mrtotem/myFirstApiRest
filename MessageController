@@ -335,3 +335,42 @@ module.exports.deleteDanger = function(req, res){
 			return res.status(200).send({message : 'Danger deleted'});
 	});
 }
+
+module.exports.cleanArrivalsDB = function(req, res){
+
+	arrived.remove({ }, function(err){
+
+		if(err){
+			return res.status(400).send(err);
+		}else{
+			console.log("DB cleaned");
+			return res.status(200).send("Arrivals cleaned");
+		}
+	});
+}
+
+module.exports.cleanAlertsDB = function(req, res){
+
+	alert.remove({ }, function(err){
+
+		if(err){
+			return res.status(400).send(err);
+		}else{
+			console.log("DB cleaned");
+			return res.status(200).send("Alerts cleaned");
+		}
+	});
+}
+
+module.exports.cleanDangersDB = function(req, res){
+
+	danger.remove({ }, function(err){
+
+		if(err){
+			return res.status(400).send(err);
+		}else{
+			console.log("DB cleaned");
+			return res.status(200).send("Dangers cleaned");
+		}
+	});
+}

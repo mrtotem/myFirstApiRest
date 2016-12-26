@@ -1,6 +1,7 @@
 var express = require('express');
 var user = require('./node_modules/scripts/models/User');
 var service = require('./services');
+var mongoose = require('mongoose');
 
 module.exports.getUsers = function (req, res){
 	
@@ -135,5 +136,18 @@ module.exports.deleteUser = function(req, res){
 				return res.status(400).send(err);
 			}
 			return res.status(200).send({message : 'User deleted'});
+	});
+}
+
+module.exports.cleanDB = function(req, res){
+
+	user.remove({ }, function(err){
+
+		if(err){
+			return res.status(400).send(err);
+		}else{
+			console.log("DB cleaned");
+			return res.status(200).send("Users cleaned");
+		}
 	});
 }
